@@ -13,6 +13,8 @@ public class BoardController : MonoBehaviour
     public float jumpForce;
     public float rotateSpeed = 3.0f;
     public float boardSpeed;
+    public float baseSpeed;
+    public float airRotate;
 
 
     private GameObject testBoard;
@@ -41,20 +43,30 @@ public class BoardController : MonoBehaviour
 
         if (Input.GetButtonDown("Forward") && !isJumping)
         {
-            myBody.AddRelativeForce(Vector3.back * boardShuffle, ForceMode.Impulse);
+            myBody.AddRelativeForce(moveDirection * boardShuffle, ForceMode.Impulse);
         }
 
         if (Input.GetButton("TurnLeft") && !isJumping)
         {
-            myBody.AddRelativeForce(Vector3.right * boardSpeed, ForceMode.Acceleration);
+            myBody.AddRelativeForce(moveDirection * boardSpeed, ForceMode.Impulse);
+            myBody.AddRelativeForce(moveDirection * boardSpeed, ForceMode.Force);
         }
 
         if (Input.GetButton("TurnRight") && !isJumping)
         {
-            myBody.AddRelativeForce(Vector3.left * boardSpeed, ForceMode.Acceleration);
+            myBody.AddRelativeForce(moveDirection * boardSpeed, ForceMode.Impulse);
+            myBody.AddRelativeForce(moveDirection * boardSpeed, ForceMode.Force);
         }
 
-        
+        if (isJumping)
+        {
+            transform.Rotate(0, Input.GetAxis("Rotate") * airRotate * Time.deltaTime, 0);
+        }
+
+        myBody.AddRelativeForce(moveDirection * baseSpeed, ForceMode.Force);
+
+
+
     }
     private void OnCollisionEnter(Collision other)
     {
