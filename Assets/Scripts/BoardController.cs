@@ -1,77 +1,69 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
+using UnityEngine;
 
-// This script moves the character controller forward
-// and sideways based on the arrow keys.
-// It also jumps when pressing space.
-// Make sure to attach a character controller to the same game object.
-// It is recommended that you make only one call to Move or SimpleMove per frame.
-
-public class BoardController : MonoBehaviour
-{
+public class BoardController : MonoBehaviour {
     public float boardShuffle;
     public float jumpForce;
-    public float rotateSpeed = 3.0f;
+    public float rotateSpeed;
     public float boardSpeed;
     public float baseSpeed;
     public float airRotate;
 
-
     private GameObject testBoard;
-
     private Vector3 moveDirection = Vector3.back;
-    private Rigidbody myBody;
-    
-
+    private Vector2 input;
+    private Rigidbody rb;
+    private bool jumpRequested;
+    private bool isShuffle;
     private bool isJumping;
 
-    void Start()
-    {
-        myBody = GetComponent<Rigidbody>();
+    void Start() {
+        rb = GetComponent<Rigidbody>();
     }
-    void Update()
-    {
 
-        transform.Rotate(0, Input.GetAxis("Rotate") * rotateSpeed * Time.deltaTime, 0);
-        //transform.Rotate(0, 0, Input.GetAxis("Roll") * turnSpeed * Time.deltaTime);
-        if (Input.GetButtonDown("Jump") && !isJumping)
-        {
-            myBody.AddRelativeForce(Vector3.up * jumpForce, ForceMode.Impulse);
+    void Update() {
+        input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        Rotate();
+
+
+        if (!isJumping && Input.GetButtonDown("Jump")) {
+            jumpRequested = true;
+        }
+
+        if (!isJumping && Input.GetButtonDown("Vertical") && Input.GetAxisRaw("Vertical") > 0) {
+            isShuffle = true;
+        }
+    }
+
+    private void FixedUpdate() {
+        if (jumpRequested) {
+            rb.AddRelativeForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isJumping = true;
-
+        } else if (isShuffle) {
+            rb.AddRelativeForce(moveDirection * boardShuffle, ForceMode.Impulse);
         }
 
-        if (Input.GetButtonDown("Forward") && !isJumping)
-        {
-            myBody.AddRelativeForce(moveDirection * boardShuffle, ForceMode.Impulse);
-        }
+        Carve();
 
-        if (Input.GetButton("TurnLeft") && !isJumping)
-        {
-            myBody.AddRelativeForce(moveDirection * boardSpeed, ForceMode.Impulse);
-            myBody.AddRelativeForce(moveDirection * boardSpeed, ForceMode.Force);
-        }
-
-        if (Input.GetButton("TurnRight") && !isJumping)
-        {
-            myBody.AddRelativeForce(moveDirection * boardSpeed, ForceMode.Impulse);
-            myBody.AddRelativeForce(moveDirection * boardSpeed, ForceMode.Force);
-        }
-
-        if (isJumping)
-        {
-            transform.Rotate(0, Input.GetAxis("Rotate") * airRotate * Time.deltaTime, 0);
-        }
-
-        myBody.AddRelativeForce(moveDirection * baseSpeed, ForceMode.Force);
-
-
-
+        jumpRequested = false;
+        isShuffle = false;
     }
-    private void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.CompareTag("Ground"))
-        {
+
+
+    private void Rotate() {
+        // TODO: inputs for carving
+        
+        float rotationValue = isJumping ? airRotate : rotateSpeed;
+        transform.Rotate(0, input.x * rotationValue * Time.deltaTime, 0);
+    }
+
+
+    private void Carve() {
+        // TODO: handle force during turns.
+    }
+
+    private void OnCollisionEnter(Collision other) {
+        if (other.gameObject.CompareTag("Ground")) {
             isJumping = false;
         }
     }
