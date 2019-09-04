@@ -4,17 +4,63 @@ using UnityEngine;
 
 public class CameraScript : MonoBehaviour
 {
-    public Transform target;
-    public float smoothSpeed = 0.125f;
-    public Vector3 offset;  
 
+    public float cameraMoveSpeed = 120.0f;
+    public GameObject cameraFollowObj;
+    Vector3 followPOS;
+    public float clampAngle = 80.0f;
+    public float inputSensitivity = 150.0f;
+    public GameObject cameraObj;
+    public GameObject playerObj;
+    public float camDistX;
+    public float camDistY;
+    public float camDistZ;
+    public float mouseX;
+    public float mouseY;
+    public float smoothX;
+    public float smoothY;
+    private float rotX = 0.0f;
+    private float rotY = 0.0f;
 
-    // Update is called once per frame
-    void FixedUpdate()
+    void Start() 
     {
-        Vector3 desiredPosition = target.position + offset;
-        Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
-
-        transform.position = smoothedPosition;
+        Vector3 rot = transform.localRotation.eulerAngles;
+        rotX = rot.x;
+        rotY = rot.y;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
+
+
+    
+    private void Update() 
+    {
+        mouseX = Input.GetAxis ("Mouse X");
+        mouseY = Input.GetAxis ("Mouse Y");
+
+        rotY += mouseX * inputSensitivity * Time.deltaTime;
+        rotX += mouseY * inputSensitivity * Time.deltaTime;
+
+        rotX = Mathf.Clamp (rotX, -clampAngle, clampAngle);
+
+        Quaternion localRotation = Quaternion.Euler (rotX, rotY, 0.0f);
+        transform.rotation = localRotation;
+
+
+    }
+
+    void LateUpdate() 
+    {
+        CameraUpdater ();
+    }
+
+    void CameraUpdater()
+    {
+        Transform target = cameraFollowObj.transform;
+        
+        float step = cameraMoveSpeed * Time.deltaTime;
+        transform.position = Vector3.MoveTowards (transform.position, target.position, step);
+
+    }
+
 }

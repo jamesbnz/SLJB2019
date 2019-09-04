@@ -18,6 +18,7 @@ public class Controller : MonoBehaviour
     Vector3 curNormal = Vector3.up;
     float distGround, distGroundL, distGroundR;
     float boardDeltaY;
+    public float jumpForce;
 
     Rigidbody rg;
     public ParticleSystem ps;
@@ -29,6 +30,7 @@ public class Controller : MonoBehaviour
     int lastTrailId = -1;
     Trail trail;
     private void Start()
+
     {
         pe = ps.emission;
         curDir = transform.rotation.eulerAngles.y;
@@ -77,7 +79,7 @@ public class Controller : MonoBehaviour
         {
             _boardNoise.volume = magnitude / 50f;
             lastTrailId = trail.AddSkidMark(posGround, normalGround, trailWidth, lastTrailId);
-            pe.rateOverTime = magnitude * 20  - 20 ;
+            pe.rateOverTime = magnitude * 20 - 20;
             localRot = transform.localRotation.eulerAngles;
             localRot.z = (distGroundR - distGroundL) * 100;
             transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(localRot), Time.deltaTime * 10);
@@ -117,12 +119,18 @@ public class Controller : MonoBehaviour
         _windNoise.pitch = pitch;
 
         rg.angularVelocity = Vector3.zero;
-        if (distGround > 0.2f) 
+        if (distGround > 0.2f)
         {
+
             //Air 
         }
         else
         {
+            if (Input.GetButtonUp("Jump"))
+            {
+                rg.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            }
+
             //On the ground/snow
             rg.velocity = transform.TransformDirection(localVel);
         }
