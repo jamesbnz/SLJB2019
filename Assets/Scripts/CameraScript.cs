@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraScript : MonoBehaviour
 {
 
-    public float cameraMoveSpeed = 120.0f;
+    public float cameraMoveSpeed = 12000.0f;
     public GameObject cameraFollowObj;
     Vector3 followPOS;
     public float clampAngle = 80.0f;

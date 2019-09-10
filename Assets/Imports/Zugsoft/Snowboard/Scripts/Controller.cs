@@ -19,6 +19,11 @@ public class Controller : MonoBehaviour
     float distGround, distGroundL, distGroundR;
     float boardDeltaY;
     public float jumpForce;
+    public float shuffleForce;
+    public float airRotateX;
+    public float airRotateY;
+    Vector3 forwardvector;
+
 
     Rigidbody rg;
     public ParticleSystem ps;
@@ -45,6 +50,8 @@ public class Controller : MonoBehaviour
     {
         //if (Input.GetKeyDown(KeyCode.P)) Application.CaptureScreenshot(System.DateTime.Now.Date.Minute+".png",4);
 
+        forwardvector = Vector3.forward;
+
         tilt = Input.GetAxis("Horizontal");
 
         if (Physics.Raycast(L.position, -curNormal, out hit))
@@ -63,6 +70,8 @@ public class Controller : MonoBehaviour
         distGround = (distGroundL + distGroundR) / 2f;
         SnowTrail();
         SnowParticle();
+
+       
 
     }
 
@@ -99,7 +108,7 @@ public class Controller : MonoBehaviour
     void FixedUpdate()
     {
         boardDeltaY = 0;
-        boardDeltaY += (float)(tilt * (1 + velocity.magnitude / 10f));
+        boardDeltaY += (float)(tilt * (1 + velocity.magnitude / 20f));
         ang = transform.eulerAngles;
         ang.y += boardDeltaY;
         transform.eulerAngles = ang;
@@ -121,15 +130,16 @@ public class Controller : MonoBehaviour
         rg.angularVelocity = Vector3.zero;
         if (distGround > 0.2f)
         {
-
             //Air 
         }
         else
         {
+
             if (Input.GetButtonUp("Jump"))
             {
                 rg.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             }
+
 
             //On the ground/snow
             rg.velocity = transform.TransformDirection(localVel);
