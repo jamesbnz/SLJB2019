@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System;
 
@@ -67,6 +68,14 @@ public class Controller : MonoBehaviour
                 posGround.y = hit.point.y;
             distGroundR = hit.distance;
         }
+
+        if (Input.GetKey("escape"))
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+            SceneManager.LoadScene("MainMenu");
+        }
+
         distGround = (distGroundL + distGroundR) / 2f;
         SnowTrail();
         SnowParticle();

@@ -13,9 +13,9 @@ public class GizmoDesign : MonoBehaviour {
         ,   end
         );
 
-        Handles.DrawAAPolyLine(20, new Vector3[] {
-            start,
-            end
-        });
+     //   Handles.DrawAAPolyLine(20, new Vector3[] {
+     //       start,
+     //       end
+     //   });
     }
 }
