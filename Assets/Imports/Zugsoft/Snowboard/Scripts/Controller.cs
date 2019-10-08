@@ -63,7 +63,7 @@ public class Controller : MonoBehaviour
         }
         if (Physics.Raycast(R.position, -curNormal, out hit))
         {
-            posGround = (posGround + hit.point) / 2f;
+            posGround = (posGround + hit.point) / 4f;
             if (hit.point.y > posGround.y)
                 posGround.y = hit.point.y;
             distGroundR = hit.distance;
@@ -76,7 +76,7 @@ public class Controller : MonoBehaviour
             SceneManager.LoadScene("MainMenu");
         }
 
-        distGround = (distGroundL + distGroundR) / 2f;
+        distGround = (distGroundL + distGroundR) / 4f;
         SnowTrail();
         SnowParticle();
 
