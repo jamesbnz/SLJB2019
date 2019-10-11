@@ -63,7 +63,7 @@ public class Controller : MonoBehaviour
         }
         if (Physics.Raycast(R.position, -curNormal, out hit))
         {
-            posGround = (posGround + hit.point) / 4f;
+            posGround = (posGround + hit.point) / 2f;
             if (hit.point.y > posGround.y)
                 posGround.y = hit.point.y;
             distGroundR = hit.distance;
@@ -76,7 +76,7 @@ public class Controller : MonoBehaviour
             SceneManager.LoadScene("MainMenu");
         }
 
-        distGround = (distGroundL + distGroundR) / 4f;
+        distGround = (distGroundL + distGroundR) / 2f;
         SnowTrail();
         SnowParticle();
 
@@ -117,7 +117,7 @@ public class Controller : MonoBehaviour
     void FixedUpdate()
     {
         boardDeltaY = 0;
-        boardDeltaY += (float)(tilt * (1 + velocity.magnitude / 20f));
+        boardDeltaY += (float)(tilt * (1 + velocity.magnitude / 50f));
         ang = transform.eulerAngles;
         ang.y += boardDeltaY;
         transform.eulerAngles = ang;
