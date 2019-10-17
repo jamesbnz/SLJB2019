@@ -10,6 +10,7 @@ public class Chairlift : MonoBehaviour
     void OnTriggerEnter(Collider trigger) 
     {
     player.transform.position = chairTop.transform.position;
+    player.transform.rotation = chairTop.transform.rotation;
     }
 
 }
