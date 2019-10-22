@@ -24,6 +24,8 @@ public class Controller : MonoBehaviour
     public float airRotateX;
     public float airRotateY;
     Vector3 forwardvector;
+    private Vector2 input;
+    public float rotationValue;
 
 
     Rigidbody rg;
@@ -139,7 +141,11 @@ public class Controller : MonoBehaviour
         rg.angularVelocity = Vector3.zero;
         if (distGround > 0.2f)
         {
-            //Air 
+        
+        input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        Rotate();
+
+                        
         }
         else
         {
@@ -149,9 +155,22 @@ public class Controller : MonoBehaviour
                 rg.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             }
 
+            if (Input.GetButtonUp("Vertical"))
+            {
+                rg.AddForce(rg.velocity * shuffleForce, ForceMode.Impulse);
+            }
+
 
             //On the ground/snow
             rg.velocity = transform.TransformDirection(localVel);
         }
+
+
+    }
+    
+    private void Rotate() {
+        // TODO: inputs for carving
+        
+        transform.Rotate(0, input.x * rotationValue * Time.deltaTime, 0);
     }
 }
