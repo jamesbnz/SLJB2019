@@ -25,7 +25,7 @@ public class ChairLiftTool : MonoBehaviour {
     private IEnumerator Move() {
         for (int i = 0; i < positions.Count; i++) {
             while (Vector3.Distance(t.position, positions[i + 1]) > 0.5) {
-                t.position = Vector3.MoveTowards(t.position, positions[i + 1], Time.deltaTime * 3);
+                t.position = Vector3.MoveTowards(t.position, positions[i + 1], Time.deltaTime * 100);
 
                 yield return null;
             }
@@ -74,7 +74,7 @@ public class ChairLiftTool : MonoBehaviour {
                 Gizmos.DrawLine(positions[i], positions[i + 1]);
             }
             
-            Gizmos.DrawSphere(positions[i], 1);
+            Gizmos.DrawSphere(positions[i], 0.1f);
         }
     }
 }
