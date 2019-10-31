@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
-// [ExecuteInEditMode]
+[InitializeOnLoad]
 public class ChairLiftTool : MonoBehaviour {
     public AnimationCurve curvature;
     public float curveMultiplier = 1.5f;
@@ -13,6 +14,10 @@ public class ChairLiftTool : MonoBehaviour {
     private List<Vector3> positions;
     
     private void Awake() {
+        if (curvature == null) {
+            curvature = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 1));
+        }
+
         GetPositions();
 
         lr = GetComponent<LineRenderer>();
