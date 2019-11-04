@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6460540581274581889}
   - component: {fileID: 762509143546660728}
   m_Layer: 0
-  m_Name: ChairUpdate
+  m_Name: ChairUp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1344372910676259748}
   m_LocalRotation: {x: -0, y: -0.3032799, z: -0, w: 0.95290154}
-  m_LocalPosition: {x: 5694.89, y: 358.21, z: 590.16}
+  m_LocalPosition: {x: 1993.8754, y: 199.73201, z: 280.8299}
   m_LocalScale: {x: -1.85, y: 1.85, z: 1.85}
   m_Children: []
   m_Father: {fileID: 0}
