@@ -24,13 +24,13 @@ public class ChairLiftTool : MonoBehaviour {
         lr.positionCount = positions.Count;
         lr.SetPositions(positions.ToArray());
 
-        StartCoroutine(Move());
+        // StartCoroutine(Move());
     }
 
     private IEnumerator Move() {
         for (int i = 0; i < positions.Count; i++) {
             while (Vector3.Distance(t.position, positions[i + 1]) > 0.5) {
-                t.position = Vector3.MoveTowards(t.position, positions[i + 1], Time.deltaTime * 3);
+                // t.position = Vector3.MoveTowards(t.position, positions[i + 1], Time.deltaTime * 3);
 
                 yield return null;
             }

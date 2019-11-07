@@ -37,8 +37,8 @@ public class Controller : MonoBehaviour
 
     int lastTrailId = -1;
     Trail trail;
+    
     private void Start()
-
     {
         pe = ps.emission;
         curDir = transform.rotation.eulerAngles.y;
@@ -71,12 +71,6 @@ public class Controller : MonoBehaviour
             distGroundR = hit.distance;
         }
 
-        if (Input.GetKey("escape"))
-        {
-            Cursor.lockState = CursorLockMode.Confined;
-            Cursor.visible = true;
-            SceneManager.LoadScene("MainMenu");
-        }
 
         distGround = (distGroundL + distGroundR) / 2f;
         SnowTrail();
