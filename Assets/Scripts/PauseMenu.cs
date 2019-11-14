@@ -10,11 +10,27 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject PauseMenuUI;
     public GameObject DropInMenuUI;
+    public GameObject MainMenuUI;
+    public GameObject MMDropInUI;
+
+    public GameObject Tukano;
+    public GameObject Wakapapa;
+    public GameObject Torua;
+    public GameObject Ngauruho;
+
+    public GameObject PlayerCamera;
+    public Rigidbody Player;
+
+    public GameObject MenuCam;
+
+    public GameObject MainMenuCanvas;
+    public GameObject PauseMenuCanvas;
+
 
     
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+       if (Input.GetKeyDown(KeyCode.Escape))
         {
             if(GameIsPaused)
             {
@@ -22,9 +38,10 @@ public class PauseMenu : MonoBehaviour
             } else 
             {
                 Pause();
+                Cursor.visible = true;
             }
         }
-        
+          
     }
 
     public void Resume()
@@ -43,7 +60,10 @@ public class PauseMenu : MonoBehaviour
         GameIsPaused = true;
 
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
+
+
 
     public void DropIn()
     {
@@ -53,14 +73,58 @@ public class PauseMenu : MonoBehaviour
 
     public void DropInBack()
     {
-        Debug.Log("test");
         DropInMenuUI.SetActive(false);
         PauseMenuUI.SetActive(true);
     }
 
     public void BailOut()
     {
-        SceneManager.LoadScene("MainMenu");
+        PauseMenuCanvas.SetActive(false);
+        MainMenuCanvas.SetActive(true);
+        MainMenuUI.SetActive(true);
+        MMDropInUI.SetActive(false);
+        PlayerCamera.SetActive(false);
+        MenuCam.SetActive(true);
+        Cursor.visible = true;
+        
+    }
+
+    
+    
+    
+    public void TukanoDrop()
+    {
+        Player.transform.position = Tukano.transform.position;
+        DropInMenuUI.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+        public void ToruaDrop()
+    {
+        Player.transform.position = Torua.transform.position;
+        DropInMenuUI.SetActive(false);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+        public void NgauruhoDrop()
+    {
+        Player.transform.position = Ngauruho.transform.position;
+        DropInMenuUI.SetActive(false);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+        public void WakapapaDrop()
+    {
+        Player.transform.position = Wakapapa.transform.position;
+        DropInMenuUI.SetActive(false);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     

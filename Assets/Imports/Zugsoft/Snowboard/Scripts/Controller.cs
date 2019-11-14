@@ -89,7 +89,7 @@ public class Controller : MonoBehaviour
 
     void SnowTrail()
     {
-        if (distGround < 0.2f)
+        if (distGround < 0.3f)
         {
             _boardNoise.volume = magnitude / 50f;
             lastTrailId = trail.AddSkidMark(posGround, normalGround, trailWidth, lastTrailId);
