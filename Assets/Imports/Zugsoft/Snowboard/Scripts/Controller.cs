@@ -11,7 +11,7 @@ public class Controller : MonoBehaviour
     float tilt;
     public AudioSource _boardNoise, _windNoise;
 
-    public float turnStrength = .1f;
+    public float turnStrength = .3f;
 
     Vector3 velocity;
     Vector3 localVel;
@@ -59,6 +59,7 @@ public class Controller : MonoBehaviour
 
         if (Physics.Raycast(L.position, -curNormal, out hit))
         {
+            posGround = (posGround + hit.point) / 2f;
             posGround = hit.point;
             distGroundL = hit.distance;
             normalGround = hit.normal;
@@ -133,7 +134,7 @@ public class Controller : MonoBehaviour
         _windNoise.pitch = pitch;
 
         rg.angularVelocity = Vector3.zero;
-        if (distGround > 0.2f)
+        if (distGround > 0.3f)
         {
         
         input = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
